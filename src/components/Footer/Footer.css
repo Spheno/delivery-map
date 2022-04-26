@@ -1,0 +1,36 @@
+.footer {
+  min-height: 74px;
+  padding: 0 70px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid #d3a27f;
+}
+
+.footer__copyright {
+  font-size: 18px;
+  line-height: 1.21;
+  font-weight: 400;
+  color: #d3a27f;
+}
+
+@media (max-width: 890px) {
+
+  .footer {
+    max-width: 80%;
+  }
+
+}
+
+@media (max-width: 620px) {
+
+  .footer__copyright {
+    margin-bottom: 36px;
+    font-size: 14px;
+  }
+
+  .footer {
+    max-width: 282px;
+  }
+
+}
