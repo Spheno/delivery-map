@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Layout } from '../Layout/Layout';
 import { Login } from '../Login/Login';
 import { NotFound } from '../NotFound/NotFound';
+import { ProtectedRoute } from '../../hoc/ ProtectedRoute';
 
 
 function App() {
@@ -60,7 +61,12 @@ function App() {
 
         <Route path="/" element={<Layout isLoggedIn={isLoggedIn} logOut={handleLogOut} />}>
 
-          <Route path="signin" element={<Login onLogIn={handleLogIn} />} />
+          <Route path="signin" element={<Login isLoggedIn={isLoggedIn} onLogIn={handleLogIn} />} />
+
+          <Route index element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+
+              </ProtectedRoute>} />
 
         </Route>
 

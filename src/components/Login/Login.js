@@ -1,8 +1,18 @@
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 
-export function Login({ onLogIn }) {
 
+export function Login({ onLogIn, isLoggedIn }) {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isLoggedIn) {
+      navigate("/")
+    }
+  }, [])
   
    const { values, handleChange, errors, isValid } = useFormWithValidation();
  
