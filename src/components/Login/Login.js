@@ -1,51 +1,45 @@
 import './Login.css';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 
-export function Login({ /*onLogIn, err,*/ isLoggedIn }) {
+export function Login({ onLogIn }) {
 
-  /* const navigate = useNavigate();
- 
-   useEffect(() => {
-     if(isLoggedIn) {
-       navigate("/movies")
-     }
-   }, [])
- 
+  
    const { values, handleChange, errors, isValid } = useFormWithValidation();
  
    function handleSubmit(e) {
      e.preventDefault();
      onLogIn(
        {
-         email: values.email,
+         login: values.login,
          password: values.password
        }
      );
-   }*/
+   }
 
   return (
 
     <main className="page__container">
       <section className="form">
         <h2 className="form__title">Авторизация</h2>
-        <form name="signin" className="form__container" /*onSubmit={(e) => handleSubmit(e)}*/ >
+        <form name="signin" className="form__container" onSubmit={(e) => handleSubmit(e)} >
           <label className="form__label" htmlFor="login">
             Login
             <input type="text" name="login" className="form__input" id="login"
-              placeholder="Login" minLength="2" maxLength="30" required /*onChange={(e) => handleChangeEmail(e)}*/ />
+              placeholder="Login" minLength="2" maxLength="30" required value={values.login || ""} onChange={(e) => handleChange(e)} />
             <span className="form__input-error" id="login-error">
-              {/*errors.email || ""*/}
+              {errors.login || ""}
             </span>
           </label>
           <label className="form__label" htmlFor="password">
             Пароль
             <input type="password" name="password" className="form__input" id="password"
-              placeholder="Пароль" required /*onChange={(e) => handleChangePassword(e)}*/ />
+              placeholder="Пароль" required value={values.password || ""} onChange={(e) => handleChange(e)} />
             <span className="form__input-error" id="password-error">
-              {/*errors.password || ""*/}
+              {errors.password || ""}
             </span>
           </label>
 
-          <button className="form__button-submit form__button-submit_type_signin hover-button" type="submit">Войти</button>
+          <button className={`form__button-submit form__button-submit_type_signin ${isValid ? 'hover-button' : 'button__disabled'}`} type="submit">Войти</button>
         </form>
       </section>
     </main>

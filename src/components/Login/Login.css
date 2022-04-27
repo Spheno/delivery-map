@@ -24,6 +24,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-bottom: 35px;
 }
 
 .form__input {
@@ -38,7 +39,7 @@
   padding: 10px;
   box-sizing: border-box;
   background-color: #f2dfd3;
-  margin: 15px auto 30px;
+  margin-top: 15px;
   color: #341d08;
 }
 
@@ -53,7 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: none;
+  border: 1px solid #d3a27f;
   border-radius: 5px;
   padding: 0;
   margin: 150px auto 50px;
@@ -74,11 +75,11 @@
   
 }
 
-/***************************************************/
 .form__input-error {
   color: #f00;
   padding: 0;
   margin: 0;
+  font-size: 12px;
   min-width: 396px;
   position: absolute;
   left: 0;
@@ -86,11 +87,11 @@
 }
 
 .button__disabled {
-  color: #C2C2C2;
-  background-color: #F8F8F8;
+  color: #d3a27f;
+  background-color: #f2dfd3;
 }
 
-/************************************************/
+
 
 @media (max-width: 620px) {
 
