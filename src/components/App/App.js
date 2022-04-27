@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Layout } from '../Layout/Layout';
 import { Login } from '../Login/Login';
@@ -7,6 +7,10 @@ import { NotFound } from '../NotFound/NotFound';
 
 
 function App() {
+
+  const navigate = useNavigate();
+
+  /* авторизация пользователя */
 
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') ? JSON.parse(localStorage.getItem('isLoggedIn')) : false)
   const [name, setName] = useState(localStorage.getItem('name') ? JSON.parse(localStorage.getItem('name')) : '')
@@ -26,13 +30,27 @@ function App() {
     handleLoggedIn()
     setName({ login })
     setPassword({ password })
+    navigate("/")
 
   }
 
   useEffect(() => {
-    localStorage.setItem("login", JSON.stringify(name));
+    localStorage.setItem("name", JSON.stringify(name));
     localStorage.setItem("password", JSON.stringify(password));
   }, [name, password]);
+
+  /* выход */
+
+  const handleLogOut = (e) => {
+
+    e.preventDefault()
+
+    setIsLoggedIn(false);
+    setName('')
+    setPassword('')
+    navigate("/signin")
+
+  }
 
 
   return (
@@ -40,7 +58,7 @@ function App() {
 
       <Routes>
 
-        <Route path="/" element={<Layout isLoggedIn={isLoggedIn} />}>
+        <Route path="/" element={<Layout isLoggedIn={isLoggedIn} logOut={handleLogOut} />}>
 
           <Route path="signin" element={<Login onLogIn={handleLogIn} />} />
 

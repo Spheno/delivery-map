@@ -1,7 +1,7 @@
 import './Header.css';
 
 
-export function Header({ isLoggedIn }) {
+export function Header({ isLoggedIn, logOut }) {
 
   return (
 
@@ -9,7 +9,7 @@ export function Header({ isLoggedIn }) {
 
       <h1 className="header__title">DM</h1>
 
-       { isLoggedIn ? <button className="header__button hover-button" type="button">Выйти</button> : '' } 
+       { isLoggedIn ? <button className="header__button hover-button" type="button" onClick={(e) => {logOut(e)}} >Выйти</button> : '' } 
 
     </header>
 
