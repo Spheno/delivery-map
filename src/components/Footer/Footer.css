@@ -1,10 +1,12 @@
 .footer {
-  min-height: 74px;
+  min-height: 50px;
   padding: 0 70px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   border-top: 1px solid #d3a27f;
+  margin-top: auto;
+  
 }
 
 .footer__copyright {
