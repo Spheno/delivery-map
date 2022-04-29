@@ -5,7 +5,7 @@ export function Header({ isLoggedIn, logOut }) {
 
   return (
 
-    <header className="header">
+    <header className="header page__container">
 
       <h1 className="header__title">DM</h1>
 

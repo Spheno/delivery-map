@@ -1,0 +1,65 @@
+.popup {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+   visibility: hidden;
+   opacity: 0;
+   transition: visibility 0.5s, opacity 0.5s ease;
+}
+
+.popup_is-opened {
+  visibility: visible;
+  opacity: 1;  
+}
+
+.popup__container_type_info-tooltip {
+  padding: 60px 0;
+}
+
+.popup__button-close {
+  border: none;
+  position: absolute;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, .0);
+  background-image: url("../../images/plus.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: rotate(-45deg);
+  background-size: contain;
+}
+
+.popup__button-close_type_profile {
+  left: 430px;
+  bottom: 335px;
+}
+
+@media (max-width: 620px) {
+
+  .popup__button-close_type_profile {
+    left: 260px;
+    bottom: 330px;
+  }
+  
+}
+
+@media (max-width: 620px) {
+  
+  .popup__button-close {
+    padding: 10px;
+  }
+  
+}
+
+@media (max-width: 620px) {
+
+  .popup__container_type_info-tooltip {
+    padding: 50px 0;
+  }
+}

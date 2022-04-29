@@ -12,7 +12,7 @@ export function NotFound() {
 
         <h2 className="not-found__title">404</h2>
         <p className="not-found__subtitle">Страница не найдена</p>
-        <button className="not-found__button hover-button" onClick={goBack}>Назад</button>
+        <button className="not-found__button hover-button" onClick={goBack}>Go back!</button>
 
       </section>
     </main>

@@ -5,9 +5,15 @@ import { Layout } from '../Layout/Layout';
 import { Login } from '../Login/Login';
 import { NotFound } from '../NotFound/NotFound';
 import { ProtectedRoute } from '../../hoc/ ProtectedRoute';
+import { Map } from '../Map/Map';
+import { Popup } from '../Popup/Popup';
+
+import model from '../../utils/model.json'
 
 
 function App() {
+
+  console.log(model)
 
   const navigate = useNavigate();
 
@@ -50,8 +56,19 @@ function App() {
     setName('')
     setPassword('')
     navigate("/signin")
-
   }
+
+  /* Редактирование доставки */
+
+  const [isDeliveryPopupOpen, setIsDeliveryPopupOpen] = useState(false);
+
+  const handleDeliveryClick = () => {
+    setIsDeliveryPopupOpen(true);
+  };
+
+  const closeAllPopups = () => {
+    setIsDeliveryPopupOpen(false);
+  };
 
 
   return (
@@ -64,9 +81,18 @@ function App() {
           <Route path="signin" element={<Login isLoggedIn={isLoggedIn} onLogIn={handleLogIn} />} />
 
           <Route index element={
-              <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Map
+                model={model}
+                onDeliveryClick={handleDeliveryClick}
+              />
 
-              </ProtectedRoute>} />
+              <Popup
+                isOpen={isDeliveryPopupOpen}
+                onClose={closeAllPopups}
+              />
+
+            </ProtectedRoute>} />
 
         </Route>
 
