@@ -6,7 +6,8 @@ import { Login } from '../Login/Login';
 import { NotFound } from '../NotFound/NotFound';
 import { ProtectedRoute } from '../../hoc/ ProtectedRoute';
 import { Map } from '../Map/Map';
-import { Popup } from '../Popup/Popup';
+import { EditDeliveryForm } from '../EditDeliveryForm/EditDeliveryForm';
+import { NewDeliveryForm } from '../NewDeliveryForm/NewDeliveryForm';
 
 import model from '../../utils/model.json'
 
@@ -61,13 +62,32 @@ function App() {
   /* Редактирование доставки */
 
   const [isDeliveryPopupOpen, setIsDeliveryPopupOpen] = useState(false);
+  const [isNewDeliveryPopupOpen, setNewIsDeliveryPopupOpen] = useState(false);
 
   const handleDeliveryClick = () => {
     setIsDeliveryPopupOpen(true);
   };
 
+  const handleNewDeliveryClick = () => {
+    setNewIsDeliveryPopupOpen(true);
+    getClickXY()
+  };
+
+  
+
+  function getClickXY(event) {
+
+    let clickX = (event.layerX == undefined ? event.offsetX : event.layerX) + 1;
+
+    let clickY = (event.layerY == undefined ? event.offsetY : event.layerY) + 1;
+
+    console.log(clickX, clickY)
+
+  }
+
   const closeAllPopups = () => {
     setIsDeliveryPopupOpen(false);
+    setNewIsDeliveryPopupOpen(false);
   };
 
 
@@ -85,10 +105,16 @@ function App() {
               <Map
                 model={model}
                 onDeliveryClick={handleDeliveryClick}
+                onMapClick={handleNewDeliveryClick}
               />
 
-              <Popup
+              <EditDeliveryForm
                 isOpen={isDeliveryPopupOpen}
+                onClose={closeAllPopups}
+              />
+
+              <NewDeliveryForm
+                isOpen={isNewDeliveryPopupOpen}
                 onClose={closeAllPopups}
               />
 
