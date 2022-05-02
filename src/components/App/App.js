@@ -11,10 +11,7 @@ import { NewDeliveryForm } from '../NewDeliveryForm/NewDeliveryForm';
 
 import model from '../../utils/model.json'
 
-
 function App() {
-
-  console.log(model)
 
   const navigate = useNavigate();
 
@@ -23,6 +20,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') ? JSON.parse(localStorage.getItem('isLoggedIn')) : false)
   const [name, setName] = useState(localStorage.getItem('name') ? JSON.parse(localStorage.getItem('name')) : '')
   const [password, setPassword] = useState(localStorage.getItem('password') ? JSON.parse(localStorage.getItem('password')) : '')
+  const [currentUserModel, setCurrentUserModel] = useState(localStorage.getItem('currentUserModel') ? JSON.parse(localStorage.getItem('currentUserModel')) : [])
 
   const handleLoggedIn = () => {
     setIsLoggedIn(true);
@@ -32,14 +30,18 @@ function App() {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
 
+  let newModel = model
+  const pushId = () => {
+    const newModell = newModel.map((n, i) => { n.id = `${i}${new Date().getTime()}` })
+    return setCurrentUserModel(newModel)
+  }
 
   const handleLogIn = ({ login, password }) => {
-
+    pushId()
     handleLoggedIn()
     setName({ login })
     setPassword({ password })
     navigate("/")
-
   }
 
   useEffect(() => {
@@ -47,19 +49,23 @@ function App() {
     localStorage.setItem("password", JSON.stringify(password));
   }, [name, password]);
 
+  useEffect(() => {
+    localStorage.setItem("currentUserModel", JSON.stringify(currentUserModel));
+  }, [currentUserModel]);
+
   /* выход */
 
   const handleLogOut = (e) => {
 
-    e.preventDefault()
-
+    e.preventDefault();
+    setCurrentUserModel([])
     setIsLoggedIn(false);
     setName('')
     setPassword('')
     navigate("/signin")
   }
 
-  /* Редактирование доставки */
+  /* Редактирование создание новых доставок */
 
   const [isDeliveryPopupOpen, setIsDeliveryPopupOpen] = useState(false);
   const [isNewDeliveryPopupOpen, setNewIsDeliveryPopupOpen] = useState(false);
@@ -68,28 +74,25 @@ function App() {
     setIsDeliveryPopupOpen(true);
   };
 
-  const handleNewDeliveryClick = () => {
-    setNewIsDeliveryPopupOpen(true);
-    getClickXY()
-  };
-
-  
-
-  function getClickXY(event) {
-
-    let clickX = (event.layerX == undefined ? event.offsetX : event.layerX) + 1;
-
-    let clickY = (event.layerY == undefined ? event.offsetY : event.layerY) + 1;
-
-    console.log(clickX, clickY)
-
-  }
-
   const closeAllPopups = () => {
     setIsDeliveryPopupOpen(false);
     setNewIsDeliveryPopupOpen(false);
   };
 
+  const handleNewDeliveryClick = () => {
+    setNewIsDeliveryPopupOpen(true);
+    //getClickXY()
+  };
+  /*
+    function getClickXY(event) {
+  
+      let clickX = (event.layerX == undefined ? event.offsetX : event.layerX) + 1;
+  
+      let clickY = (event.layerY == undefined ? event.offsetY : event.layerY) + 1;
+  
+      console.log(clickX, clickY)
+  
+    }*/
 
   return (
     <>
@@ -103,7 +106,7 @@ function App() {
           <Route index element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Map
-                model={model}
+                model={currentUserModel}
                 onDeliveryClick={handleDeliveryClick}
                 onMapClick={handleNewDeliveryClick}
               />
@@ -116,6 +119,7 @@ function App() {
               <NewDeliveryForm
                 isOpen={isNewDeliveryPopupOpen}
                 onClose={closeAllPopups}
+
               />
 
             </ProtectedRoute>} />

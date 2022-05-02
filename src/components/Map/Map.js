@@ -13,7 +13,8 @@ export function Map({ model, onDeliveryClick, onMapClick }) {
 
         {model.map(dot => {
           return <Dot 
-          key={dot.toString()}
+          key={dot.id}
+          id={dot.id}
           coordx={dot.x}
           coordy={dot.y}
           name={dot.name}

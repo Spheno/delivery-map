@@ -44,7 +44,7 @@ export function Form({ isOpen, onClose, name, title, buttonName, children }) {
           <div className="form__button-container">
             {children}
             <button className={`form__button-submit form__button-submit_type_${name} ${isValid ? 'hover-button' : 'button__disabled'}`} type="submit"
-              value='Сохранить' onClick={isValid && onClose}>{buttonName}</button>
+              value='Сохранить' onClick={isValid ? onClose : undefined}>{buttonName}</button>
           </div>
 
           <button className={`form__button-close form__button-close_type_${name} hover-button`} type="button"

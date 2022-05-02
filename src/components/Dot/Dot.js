@@ -1,6 +1,8 @@
 
 
-export function Dot({ coordx, coordy, name, amount, onDeliveryClick }) {
+export function Dot({ coordx, coordy, name, amount, onDeliveryClick, id }) {
+
+//console.log(id)
 
   return (
     <>
