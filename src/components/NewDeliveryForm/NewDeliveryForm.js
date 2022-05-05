@@ -2,7 +2,7 @@ import './NewDeliveryForm.css';
 //import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import { Form } from '../Form/Form'
 
-export function NewDeliveryForm({ isOpen, onClose }) {
+export function NewDeliveryForm({ isOpen, onClose, onCreateDot }) {
 
   return (
 
@@ -12,6 +12,7 @@ export function NewDeliveryForm({ isOpen, onClose }) {
       buttonName='Сохранить'
       isOpen={isOpen}
       onClose={onClose}
+      onCreateDot={onCreateDot}
     >
 
     </Form>

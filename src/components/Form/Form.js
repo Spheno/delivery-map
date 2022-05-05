@@ -3,7 +3,7 @@ import { Popup } from '../Popup/Popup'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import { useEffect } from 'react'
 
-export function Form({ isOpen, onClose, name, title, buttonName, children, onUpdate, selectedDot }) {
+export function Form({ isOpen, onClose, name, title, buttonName, children, onUpdate, selectedDot, onCreateDot }) {
 
   
 
@@ -25,15 +25,27 @@ export function Form({ isOpen, onClose, name, title, buttonName, children, onUpd
   function handleSubmit(e) {
     e.preventDefault();
 
-    onUpdate(
-      {
-        id: selectedDot.id,
-        name: values.place,
-        amount: Number(values.amount),
-        x: Number(values.coordx),
-        y: Number(values.coordy)
-      }
-    );
+
+    if(!selectedDot) { 
+      onCreateDot(
+        {
+          name: values.place,
+          amount: Number(values.amount),
+          x: Number(values.coordx),
+          y: Number(values.coordy),
+          id: `${new Date().getTime()}`,
+        })
+    } else {
+      onUpdate(
+        {
+          id: selectedDot.id,
+          name: values.place,
+          amount: Number(values.amount),
+          x: Number(values.coordx),
+          y: Number(values.coordy)
+        }
+      );
+    }
   }
 
   return (

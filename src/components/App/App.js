@@ -119,6 +119,10 @@ function App() {
     setSelectedDot(null)
   }
 
+  const handleCreateDot = (dot) => {
+    setCurrentUserModel([dot, ...currentUserModel]);
+  }
+
   return (
     <>
 
@@ -148,6 +152,7 @@ function App() {
               <NewDeliveryForm
                 isOpen={isNewDeliveryPopupOpen}
                 onClose={closeAllPopups}
+                onCreateDot={handleCreateDot}
               />
 
             </ProtectedRoute>} />
