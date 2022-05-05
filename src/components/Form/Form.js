@@ -1,16 +1,46 @@
 import './Form.css'
 import { Popup } from '../Popup/Popup'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
+import { useEffect } from 'react'
 
-export function Form({ isOpen, onClose, name, title, buttonName, children }) {
+export function Form({ isOpen, onClose, name, title, buttonName, children, onUpdate, selectedDot }) {
 
-  const { values, handleChange, errors, isValid } = useFormWithValidation();
+  
+
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+
+
+  useEffect(() => {
+    if(selectedDot){
+      resetForm({
+        place: selectedDot.name,
+        amount: selectedDot.amount,
+        coordx: selectedDot.x,
+        coordy: selectedDot.y
+      })
+    }
+    
+  }, [selectedDot])
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onUpdate(
+      {
+        id: selectedDot.id,
+        name: values.place,
+        amount: Number(values.amount),
+        x: Number(values.coordx),
+        y: Number(values.coordy)
+      }
+    );
+  }
 
   return (
     <Popup isOpen={isOpen} onClose={onClose} name={name} >
       <div className="form">
         <h2 className="form__title">{title}</h2>
-        <form name={`${name}`} className={`form__container form__container_type_${name}`} /*onSubmit={onSubmit}*/ >
+        <form name={`${name}`} className={`form__container form__container_type_${name}`} onSubmit={(e) => {handleSubmit(e)}} >
 
 
           <label className="form__field" htmlFor="place">
@@ -44,7 +74,7 @@ export function Form({ isOpen, onClose, name, title, buttonName, children }) {
           <div className="form__button-container">
             {children}
             <button className={`form__button-submit form__button-submit_type_${name} ${isValid ? 'hover-button' : 'button__disabled'}`} type="submit"
-              value='Сохранить' onClick={isValid ? onClose : undefined}>{buttonName}</button>
+              value='Сохранить' onClick={isValid ? onClose : undefined} >{buttonName}</button>
           </div>
 
           <button className={`form__button-close form__button-close_type_${name} hover-button`} type="button"

@@ -3,7 +3,7 @@ import map from '../../images/map.jpg';
 import './Map.css';
 import { Dot } from '../Dot/Dot';
 
-export function Map({ model, onDeliveryClick, onMapClick }) {
+export function Map({ model, onDeliveryClick, onMapClick, onDotClick }) {
 
   return (
 
@@ -14,12 +14,14 @@ export function Map({ model, onDeliveryClick, onMapClick }) {
         {model.map(dot => {
           return <Dot 
           key={dot.id}
+          dot={dot}
           id={dot.id}
           coordx={dot.x}
           coordy={dot.y}
           name={dot.name}
           amount={dot.amount}
           onDeliveryClick={onDeliveryClick}
+          onDotClick={onDotClick}
           />
         })}
 

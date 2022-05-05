@@ -1,7 +1,9 @@
 import './Popup.css';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function Popup({ isOpen, onClose, name, children }) {
+
+  const popupLinkRef = useRef();
 
   useEffect(() => {
     if (!isOpen) return
@@ -26,7 +28,7 @@ export function Popup({ isOpen, onClose, name, children }) {
 
   return (
 
-      <article className={`popup popup_type_${name} ${isOpen ? 'popup_is-opened' : ''}`} onClick={(e) => handlerClosePopupOverlayClick(e)} >
+      <article className={`popup popup_type_${name} ${isOpen ? 'popup_is-opened' : ''}`} ref={popupLinkRef} onClick={(e) => handlerClosePopupOverlayClick(e)} >
 
         {children}
 

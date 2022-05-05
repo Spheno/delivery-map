@@ -1,12 +1,12 @@
 
 
-export function Dot({ coordx, coordy, name, amount, onDeliveryClick, id }) {
+export function Dot({ coordx, coordy, name, amount, onDeliveryClick, onDotClick, dot }) {
 
-//console.log(id)
+
 
   return (
     <>
-      <button className="map__mark" type="button" onClick={onDeliveryClick} style={{ top: `${coordy}%`, left: `${coordx}%` }}>
+      <button className="map__mark" type="button" onClick={() => {onDeliveryClick(); onDotClick(dot)}} style={{ top: `${coordy}%`, left: `${coordx}%` }}>
 
         <div className="map__dot" ></div>
         <div className="map__info" >

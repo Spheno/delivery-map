@@ -20,7 +20,11 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') ? JSON.parse(localStorage.getItem('isLoggedIn')) : false)
   const [name, setName] = useState(localStorage.getItem('name') ? JSON.parse(localStorage.getItem('name')) : '')
   const [password, setPassword] = useState(localStorage.getItem('password') ? JSON.parse(localStorage.getItem('password')) : '')
-  const [currentUserModel, setCurrentUserModel] = useState(localStorage.getItem('currentUserModel') ? JSON.parse(localStorage.getItem('currentUserModel')) : [])
+  const [currentUserModel, setCurrentUserModel] = useState(localStorage.getItem('currentUserModel') ? JSON.parse(localStorage.getItem('currentUserModel')) : null)
+
+  useEffect(() => {
+    localStorage.setItem("currentUserModel", JSON.stringify(currentUserModel));
+  }, [JSON.stringify(currentUserModel)]);
 
   const handleLoggedIn = () => {
     setIsLoggedIn(true);
@@ -30,10 +34,10 @@ function App() {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
 
-  let newModel = model
+
   const pushId = () => {
-    const newModell = newModel.map((n, i) => { n.id = `${i}${new Date().getTime()}` })
-    return setCurrentUserModel(newModel)
+    model.map((n, i) => { n.id = `${i}${new Date().getTime()}` })
+    return setCurrentUserModel(model)
   }
 
   const handleLogIn = ({ login, password }) => {
@@ -48,10 +52,6 @@ function App() {
     localStorage.setItem("name", JSON.stringify(name));
     localStorage.setItem("password", JSON.stringify(password));
   }, [name, password]);
-
-  useEffect(() => {
-    localStorage.setItem("currentUserModel", JSON.stringify(currentUserModel));
-  }, [currentUserModel]);
 
   /* выход */
 
@@ -94,6 +94,31 @@ function App() {
   
     }*/
 
+  const handleDeliveryUpdate = ({ name, amount, x, y, id }) => {
+    currentUserModel.map(el => {
+      if (el.id === id) {
+        el.name = name;
+        el.amount = amount;
+        el.x = x;
+        el.y = y;
+      }
+    })
+    setCurrentUserModel(currentUserModel)
+    setSelectedDot(null)
+  }
+
+  const [selectedDot, setSelectedDot] = useState(null);
+
+  const handleDotClick = (dot) => {
+    setSelectedDot(dot)
+  };
+
+  const handleDotDelete = (e) => {
+    e.preventDefault();
+    setCurrentUserModel(currentUserModel.filter((el) => el.id !== selectedDot.id));
+    setSelectedDot(null)
+  }
+
   return (
     <>
 
@@ -109,17 +134,20 @@ function App() {
                 model={currentUserModel}
                 onDeliveryClick={handleDeliveryClick}
                 onMapClick={handleNewDeliveryClick}
+                onDotClick={handleDotClick}
               />
 
               <EditDeliveryForm
                 isOpen={isDeliveryPopupOpen}
                 onClose={closeAllPopups}
+                onUpdate={handleDeliveryUpdate}
+                selectedDot={selectedDot}
+                onDotDelete={handleDotDelete}
               />
 
               <NewDeliveryForm
                 isOpen={isNewDeliveryPopupOpen}
                 onClose={closeAllPopups}
-
               />
 
             </ProtectedRoute>} />

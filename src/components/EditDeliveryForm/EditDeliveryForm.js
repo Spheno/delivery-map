@@ -1,17 +1,7 @@
 import './EditDeliveryForm.css';
 import { Form } from '../Form/Form'
 
-export function EditDeliveryForm({ isOpen, onClose }) {
-
-  /*function handleSubmit(e) {
-    e.preventDefault();
-    onLogIn(
-      {
-        login: values.login,
-        password: values.password
-      }
-    );
-  }*/
+export function EditDeliveryForm({ isOpen, onClose, onUpdate, selectedDot, onDotDelete }) {
 
   return (
 
@@ -21,9 +11,11 @@ export function EditDeliveryForm({ isOpen, onClose }) {
       buttonName='Сохранить'
       isOpen={isOpen}
       onClose={onClose}
+      onUpdate={onUpdate}
+      selectedDot={selectedDot}
     >
 
-      <button className='form__button-submit form__button-submit_type_delete hover-button' type="submit">Удалить</button>
+      <button className='form__button-submit form__button-submit_type_delete hover-button' type="button" onClick={(e) => {onDotDelete(e); onClose()}} >Удалить</button>
 
     </Form>
 
