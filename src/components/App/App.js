@@ -81,18 +81,7 @@ function App() {
 
   const handleNewDeliveryClick = () => {
     setNewIsDeliveryPopupOpen(true);
-    //getClickXY()
   };
-  /*
-    function getClickXY(event) {
-  
-      let clickX = (event.layerX == undefined ? event.offsetX : event.layerX) + 1;
-  
-      let clickY = (event.layerY == undefined ? event.offsetY : event.layerY) + 1;
-  
-      console.log(clickX, clickY)
-  
-    }*/
 
   const handleDeliveryUpdate = ({ name, amount, x, y, id }) => {
     currentUserModel.map(el => {
@@ -120,6 +109,7 @@ function App() {
   }
 
   const handleCreateDot = (dot) => {
+    console.log(currentUserModel.length)
     setCurrentUserModel([dot, ...currentUserModel]);
   }
 
@@ -153,6 +143,7 @@ function App() {
                 isOpen={isNewDeliveryPopupOpen}
                 onClose={closeAllPopups}
                 onCreateDot={handleCreateDot}
+                length={currentUserModel.length}
               />
 
             </ProtectedRoute>} />

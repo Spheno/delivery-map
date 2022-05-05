@@ -3,15 +3,15 @@ import { Popup } from '../Popup/Popup'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import { useEffect } from 'react'
 
-export function Form({ isOpen, onClose, name, title, buttonName, children, onUpdate, selectedDot, onCreateDot }) {
+export function Form({ isOpen, onClose, name, title, buttonName, children, onUpdate, selectedDot, onCreateDot, length }) {
 
-  
+
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
 
   useEffect(() => {
-    if(selectedDot){
+    if (selectedDot) {
       resetForm({
         place: selectedDot.name,
         amount: selectedDot.amount,
@@ -19,22 +19,20 @@ export function Form({ isOpen, onClose, name, title, buttonName, children, onUpd
         coordy: selectedDot.y
       })
     }
-    
   }, [selectedDot])
 
   function handleSubmit(e) {
     e.preventDefault();
-
-
-    if(!selectedDot) { 
+    if (!selectedDot) {
       onCreateDot(
         {
           name: values.place,
           amount: Number(values.amount),
           x: Number(values.coordx),
           y: Number(values.coordy),
-          id: `${new Date().getTime()}`,
+          id: `${length}${new Date().getTime()}`,
         })
+      resetForm()
     } else {
       onUpdate(
         {
@@ -52,7 +50,7 @@ export function Form({ isOpen, onClose, name, title, buttonName, children, onUpd
     <Popup isOpen={isOpen} onClose={onClose} name={name} >
       <div className="form">
         <h2 className="form__title">{title}</h2>
-        <form name={`${name}`} className={`form__container form__container_type_${name}`} onSubmit={(e) => {handleSubmit(e)}} >
+        <form name={`${name}`} className={`form__container form__container_type_${name}`} onSubmit={(e) => { handleSubmit(e) }} >
 
 
           <label className="form__field" htmlFor="place">

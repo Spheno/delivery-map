@@ -2,7 +2,7 @@ import './NewDeliveryForm.css';
 //import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 import { Form } from '../Form/Form'
 
-export function NewDeliveryForm({ isOpen, onClose, onCreateDot }) {
+export function NewDeliveryForm({ isOpen, onClose, onCreateDot, length }) {
 
   return (
 
@@ -13,6 +13,7 @@ export function NewDeliveryForm({ isOpen, onClose, onCreateDot }) {
       isOpen={isOpen}
       onClose={onClose}
       onCreateDot={onCreateDot}
+      length={length}
     >
 
     </Form>
