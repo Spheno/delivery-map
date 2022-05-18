@@ -1,11 +1,9 @@
 import './Form.css'
 import { Popup } from '../Popup/Popup'
 import { useFormWithValidation } from '../../hooks/useFormWithValidation'
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
 export function Form({ isOpen, onClose, name, title, buttonName, children, onUpdate, selectedDot, onCreateDot, length }) {
-
-
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
@@ -23,7 +21,7 @@ export function Form({ isOpen, onClose, name, title, buttonName, children, onUpd
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!selectedDot) {
+    if (!selectedDot.id) {
       onCreateDot(
         {
           name: values.place,
@@ -77,7 +75,7 @@ export function Form({ isOpen, onClose, name, title, buttonName, children, onUpd
           <label className="form__field" htmlFor="coordy">
             Координаты доставки ось y
             <input type="text" name="coordy" className="form__input form__input_coordx" id="coordy" pattern="^\d{1,2}|^\d{1,2}\.{1}\d{1,20}"
-              placeholder="Координаты доставки ось х" required value={values.coordy || ""} onChange={(e) => handleChange(e)} />
+              placeholder="Координаты доставки ось y" required value={values.coordy || ""} onChange={(e) => handleChange(e)} />
             <span className="form__input-error" id="coordy-error">{errors.coordy || ""}</span>
           </label>
 

@@ -79,7 +79,8 @@ function App() {
     setNewIsDeliveryPopupOpen(false);
   };
 
-  const handleNewDeliveryClick = () => {
+  const handleNewDeliveryClick = (mouseState) => {
+    setSelectedDot(mouseState)
     setNewIsDeliveryPopupOpen(true);
   };
 
@@ -109,7 +110,6 @@ function App() {
   }
 
   const handleCreateDot = (dot) => {
-    console.log(currentUserModel.length)
     setCurrentUserModel([dot, ...currentUserModel]);
   }
 
@@ -143,6 +143,7 @@ function App() {
                 isOpen={isNewDeliveryPopupOpen}
                 onClose={closeAllPopups}
                 onCreateDot={handleCreateDot}
+                selectedDot={selectedDot}
                 length={currentUserModel.length}
               />
 
