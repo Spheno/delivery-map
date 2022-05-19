@@ -79,10 +79,25 @@ function App() {
     setNewIsDeliveryPopupOpen(false);
   };
 
-  const handleNewDeliveryClick = (mouseState) => {
-    setSelectedDot(mouseState)
-    setNewIsDeliveryPopupOpen(true);
+  const [selectedNewDot, setSelectedNewDot] = useState(null);
+
+   function handleNewDotClick (mouseState) {
+     console.log(mouseState)
+     
+    return setSelectedNewDot(mouseState)
+    //setNewIsDeliveryPopupOpen(true);
+  }
+
+  const handleNewDeliveryClick = () => {
+    
+      setNewIsDeliveryPopupOpen(true);
+    
+    
   };
+
+
+
+
 
   const handleDeliveryUpdate = ({ name, amount, x, y, id }) => {
     currentUserModel.map(el => {
@@ -129,6 +144,7 @@ function App() {
                 onDeliveryClick={handleDeliveryClick}
                 onMapClick={handleNewDeliveryClick}
                 onDotClick={handleDotClick}
+                onNewDotClick={handleNewDotClick}
               />
 
               <EditDeliveryForm
@@ -143,7 +159,7 @@ function App() {
                 isOpen={isNewDeliveryPopupOpen}
                 onClose={closeAllPopups}
                 onCreateDot={handleCreateDot}
-                selectedDot={selectedDot}
+                selectedDot={selectedNewDot}
                 length={currentUserModel.length}
               />
 

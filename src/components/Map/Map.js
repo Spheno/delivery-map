@@ -2,49 +2,33 @@
 import map from '../../images/map.jpg';
 import './Map.css';
 import { Dot } from '../Dot/Dot';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMousePosition } from '../../hooks/useMousePosition'
 
-export function Map({ model, onDeliveryClick, onMapClick, onDotClick }) {
+export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotClick }) {
 
   const mapRef = useRef()
   const mouseState = useMousePosition(mapRef)
 
-const [ff, setFf] = useState({})
-
   useEffect(() => {
-    
-      const width = mapRef.current.clientWidth
-      const percent = width/100
-      const x = (Math.floor(mouseState.coordX - (window.innerWidth - width)/2) / percent ).toFixed(15);
-      const y = (Math.floor((mouseState.coordY - 92) / percent)).toFixed(15);
-  
-      
-  console.log(x, y)
-  return setFf({x, y})
-  
-    
+  handleMapClick()
   }, [mouseState])
 
-  console.log(ff)
+  const handleMapClick = () => {
 
-
-  const handleMapClick = (e) => {
-    e.preventDefault()
-    return onMapClick(ff)
+    const width = mapRef.current.clientWidth
+      const percent = width/100
+      const x = ((mouseState.coordX - (window.innerWidth - width)/2)/percent).toFixed(15);
+      const y = ((mouseState.coordY - 92)/percent).toFixed(15);
+console.log(width, percent, mouseState.coordY)
+    return onNewDotClick({x, y})
   }
-
-
-
-
-
-
 
   return (
 
     <main className="page__container">
       <div className="map">
-        <img className="map__plan" alt="карта" src={map} onClick={(e) => handleMapClick(e)} ref={mapRef} />
+        <img className="map__plan" alt="карта" src={map} onClick={() => {handleMapClick(); onMapClick()}} ref={mapRef} />
 
         {model.map(dot => {
           return <Dot
