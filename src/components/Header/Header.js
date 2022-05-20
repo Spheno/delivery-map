@@ -1,6 +1,5 @@
 import './Header.css';
 
-
 export function Header({ isLoggedIn, logOut }) {
 
   return (

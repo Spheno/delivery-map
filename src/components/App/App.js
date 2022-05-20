@@ -81,23 +81,13 @@ function App() {
 
   const [selectedNewDot, setSelectedNewDot] = useState(null);
 
-   function handleNewDotClick (mouseState) {
-     console.log(mouseState)
-     
+  function handleNewDotClick(mouseState) {
     return setSelectedNewDot(mouseState)
-    //setNewIsDeliveryPopupOpen(true);
   }
 
   const handleNewDeliveryClick = () => {
-    
-      setNewIsDeliveryPopupOpen(true);
-    
-    
+    setNewIsDeliveryPopupOpen(true);
   };
-
-
-
-
 
   const handleDeliveryUpdate = ({ name, amount, x, y, id }) => {
     currentUserModel.map(el => {

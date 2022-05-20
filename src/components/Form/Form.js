@@ -7,7 +7,6 @@ export function Form({ isOpen, onClose, name, title, buttonName, children, onUpd
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-
   useEffect(() => {
     if (selectedDot) {
       resetForm({
