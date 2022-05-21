@@ -16,6 +16,11 @@
   margin: 0;
 }
 
+.header__button-container {
+display: flex;
+justify-content: space-between;
+}
+
 .header__button {
   min-width: 76px;
   border-radius: 3px;
@@ -44,6 +49,7 @@
   .header__button {
     min-width: 54px;
     padding: 5px 0;
+    margin-left: 15px;
   }
 
 }

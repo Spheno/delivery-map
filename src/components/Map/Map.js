@@ -12,6 +12,8 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
   const mouseState = useMousePosition(mapRef)
   const windowWidth = useSize()
 
+  
+
   useEffect(() => {
     handleMapClick()
   }, [mouseState])
@@ -31,6 +33,8 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
   }, [windowWidth])
 
   const handleMapClick = () => {
+    const qq = mapRef.current.offsetParent;
+  console.log(mapRef.current.offsetParent)
     const width = mapRef.current.clientWidth
     const percent = width / 100
     const x = ((mouseState.coordX - (window.innerWidth - width) / 2) / percent).toFixed(15);

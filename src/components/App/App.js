@@ -118,12 +118,17 @@ function App() {
     setCurrentUserModel([dot, ...currentUserModel]);
   }
 
+  const handleReset = (e) => {
+    e.preventDefault();
+    pushId()
+  }
+
   return (
     <>
 
       <Routes>
 
-        <Route path="/" element={<Layout isLoggedIn={isLoggedIn} logOut={handleLogOut} />}>
+        <Route path="/" element={<Layout isLoggedIn={isLoggedIn} reset={handleReset} logOut={handleLogOut} />}>
 
           <Route path="signin" element={<Login isLoggedIn={isLoggedIn} onLogIn={handleLogIn} />} />
 
