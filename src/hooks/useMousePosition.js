@@ -4,6 +4,7 @@ export const useMousePosition = (ref) => {
   const [mousePosition, setMousePosition] = useState({});
   useEffect(() => {
     const getMousePosition = e => {
+      e.preventDefault()
       const coordX = e.pageX;
       const coordY = e.pageY;
       setMousePosition({ coordX, coordY });

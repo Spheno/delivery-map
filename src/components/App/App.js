@@ -140,6 +140,7 @@ function App() {
                 onMapClick={handleNewDeliveryClick}
                 onDotClick={handleDotClick}
                 onNewDotClick={handleNewDotClick}
+                
               />
 
               <EditDeliveryForm

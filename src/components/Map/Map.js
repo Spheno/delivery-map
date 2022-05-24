@@ -12,8 +12,6 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
   const mouseState = useMousePosition(mapRef)
   const windowWidth = useSize()
 
-  
-
   useEffect(() => {
     handleMapClick()
   }, [mouseState])
@@ -33,8 +31,6 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
   }, [windowWidth])
 
   const handleMapClick = () => {
-    const qq = mapRef.current.offsetParent;
-  console.log(mapRef.current.offsetParent)
     const width = mapRef.current.clientWidth
     const percent = width / 100
     const x = ((mouseState.coordX - (window.innerWidth - width) / 2) / percent).toFixed(15);
@@ -42,10 +38,49 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
     return onNewDotClick({ x, y })
   }
 
+
+  const useMouse = () => {
+    const [mousePosition, setMousePosition] = useState({});
+    useEffect(() => {
+      const getMousePosition = (e) => {
+        e.preventDefault()
+        const coordX = e.pageX;
+        const coordY = e.pageY;
+        setMousePosition({ coordX, coordY });
+      };
+      mapRef.current.addEventListener("mousemove", (e) => (getMousePosition(e)));
+      return function cleanup() {
+        mapRef.current.removeEventListener("mousemove", getMousePosition);
+      };
+    });
+    //console.log(mousePosition)
+    return mousePosition;
+  };
+
+  const dotMove = useMouse()
+  
+  useEffect(() => {
+    handleDotMove()
+    console.log( mouseState )
+  }, [mouseState])
+
+  const handleDotMove = () => {
+    const width = mapRef.current.clientWidth
+    const percent = width / 100
+    const x = ((mouseState.coordX - (window.innerWidth - width) / 2) / percent).toFixed(15);
+    const y = ((mouseState.coordY - headerHeight) / percent).toFixed(15);
+    //return onNewDotClick({ x, y })
+    console.log({ x, y })
+  }
+
+  
+
+  
+
   return (
 
     <main className="page__container">
-      <div className="map">
+      <div className="map" onMouseUp={() => handleDotMove()}>
         <img className="map__plan" alt="карта" src={map} onClick={() => { handleMapClick(); onMapClick() }} ref={mapRef} />
 
         {model.map(dot => {
@@ -59,6 +94,8 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
             amount={dot.amount}
             onDeliveryClick={onDeliveryClick}
             onDotClick={onDotClick}
+
+          
           />
         })}
 
