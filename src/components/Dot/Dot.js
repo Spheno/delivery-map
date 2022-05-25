@@ -2,7 +2,8 @@ export function Dot({ coordx, coordy, name, amount, onDeliveryClick, onDotClick,
 
 function handleDrag(e, dot) {
   e.preventDefault()
-  console.log('drag', dot)
+  onDotClick(dot)
+  //console.log('drag', dot)
 }
 
 function handleDrop(e, dot) {
@@ -15,9 +16,9 @@ function handleDrop(e, dot) {
       <button className="map__mark" type="button"
         onClick={() => { onDeliveryClick(); onDotClick(dot) }} 
         draggable={true} 
-        
+
         onDrag={(e) => {handleDrag(e, dot)}}
-        onDrop={(e) => {handleDrop(e, dot)}}
+        //onDrop={(e) => {handleDrop(e, dot)}}
 
 
         style={{ top: `${coordy}%`, left: `${coordx}%` }}>

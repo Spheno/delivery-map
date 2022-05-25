@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useMousePosition } from '../../hooks/useMousePosition';
 import { useSize } from '../../hooks/useSize';
 
-export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotClick }) {
+export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotClick, onDotMove }) {
 
   const mapRef = useRef()
   const mouseState = useMousePosition(mapRef)
@@ -14,6 +14,7 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
 
   useEffect(() => {
     handleMapClick()
+    //handleDotMove()
   }, [mouseState])
 
   const [headerHeight, setHeaderHeight] = useState()
@@ -30,57 +31,43 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
     hadleWindowWidth()
   }, [windowWidth])
 
-  const handleMapClick = () => {
+  const coord = () => {
     const width = mapRef.current.clientWidth
     const percent = width / 100
     const x = ((mouseState.coordX - (window.innerWidth - width) / 2) / percent).toFixed(15);
     const y = ((mouseState.coordY - headerHeight) / percent).toFixed(15);
-    return onNewDotClick({ x, y })
+    return { x, y }
   }
 
+  const handleMapClick = () => {
+    return onNewDotClick(coord())
+  }
 
-  const useMouse = () => {
-    const [mousePosition, setMousePosition] = useState({});
-    useEffect(() => {
-      const getMousePosition = (e) => {
-        e.preventDefault()
-        const coordX = e.pageX;
-        const coordY = e.pageY;
-        setMousePosition({ coordX, coordY });
-      };
-      mapRef.current.addEventListener("mousemove", (e) => (getMousePosition(e)));
-      return function cleanup() {
-        mapRef.current.removeEventListener("mousemove", getMousePosition);
-      };
-    });
-    //console.log(mousePosition)
-    return mousePosition;
-  };
+  /*
+  const [isMove, setIsMove] = useState(false)
 
-  const dotMove = useMouse()
-  
   useEffect(() => {
-    handleDotMove()
-    console.log( mouseState )
+    const handlerIsMove = () => {
+      setIsMove(true)
+    }
+    mapRef.current.addEventListener("mousedown", handlerIsMove);
+    return function cleanup() {
+      mapRef.current.removeEventListener("mousemove", handlerIsMove);
+    };
   }, [mouseState])
 
+
   const handleDotMove = () => {
-    const width = mapRef.current.clientWidth
-    const percent = width / 100
-    const x = ((mouseState.coordX - (window.innerWidth - width) / 2) / percent).toFixed(15);
-    const y = ((mouseState.coordY - headerHeight) / percent).toFixed(15);
-    //return onNewDotClick({ x, y })
-    console.log({ x, y })
+    setIsMove(false)
+    return onDotMove(coord())
   }
+  */
 
-  
-
-  
 
   return (
 
     <main className="page__container">
-      <div className="map" onMouseUp={() => handleDotMove()}>
+      <div className="map" /*onMouseUp={isMove && handleDotMove}*/>
         <img className="map__plan" alt="карта" src={map} onClick={() => { handleMapClick(); onMapClick() }} ref={mapRef} />
 
         {model.map(dot => {
@@ -95,7 +82,7 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
             onDeliveryClick={onDeliveryClick}
             onDotClick={onDotClick}
 
-          
+
           />
         })}
 

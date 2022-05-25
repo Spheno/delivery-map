@@ -123,6 +123,19 @@ function App() {
     pushId()
   }
 
+  const handleDotMove = (mouseState) => {
+    if (selectedDot) {
+      currentUserModel.map(el => {
+        if (el.id === selectedDot.id) {
+          el.x = mouseState.x;
+          el.y = mouseState.y;
+        }
+      })
+      setCurrentUserModel(currentUserModel)
+      setSelectedDot(null)
+    }
+  }
+
   return (
     <>
 
@@ -140,7 +153,7 @@ function App() {
                 onMapClick={handleNewDeliveryClick}
                 onDotClick={handleDotClick}
                 onNewDotClick={handleNewDotClick}
-                
+                onDotMove={handleDotMove}
               />
 
               <EditDeliveryForm
