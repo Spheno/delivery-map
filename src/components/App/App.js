@@ -123,6 +123,7 @@ function App() {
     pushId()
   }
 
+  
   const handleDotMove = (mouseState) => {
     if (selectedDot) {
       currentUserModel.map(el => {
@@ -135,6 +136,8 @@ function App() {
       setSelectedDot(null)
     }
   }
+  
+  
 
   return (
     <>

@@ -14,7 +14,6 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
 
   useEffect(() => {
     handleMapClick()
-    //handleDotMove()
   }, [mouseState])
 
   const [headerHeight, setHeaderHeight] = useState()
@@ -31,44 +30,36 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
     hadleWindowWidth()
   }, [windowWidth])
 
-  const coord = () => {
+  const coord = (coordX, coordY) => {
     const width = mapRef.current.clientWidth
     const percent = width / 100
-    const x = ((mouseState.coordX - (window.innerWidth - width) / 2) / percent).toFixed(15);
-    const y = ((mouseState.coordY - headerHeight) / percent).toFixed(15);
+    const x = ((coordX - (window.innerWidth - width) / 2) / percent).toFixed(15);
+    const y = ((coordY - headerHeight) / percent).toFixed(15);
     return { x, y }
   }
 
   const handleMapClick = () => {
-    return onNewDotClick(coord())
+    return onNewDotClick(coord(mouseState.coordX, mouseState.coordY))
   }
 
-  /*
-  const [isMove, setIsMove] = useState(false)
-
-  useEffect(() => {
-    const handlerIsMove = () => {
-      setIsMove(true)
-    }
-    mapRef.current.addEventListener("mousedown", handlerIsMove);
-    return function cleanup() {
-      mapRef.current.removeEventListener("mousemove", handlerIsMove);
-    };
-  }, [mouseState])
-
-
-  const handleDotMove = () => {
-    setIsMove(false)
-    return onDotMove(coord())
+  function handleDrop(e) {
+    e.preventDefault()
+    onDotMove(coord(e.pageX, e.pageY))
   }
-  */
 
+  function handleDragOver(e) {
+    e.preventDefault()
+  }
 
   return (
 
     <main className="page__container">
-      <div className="map" /*onMouseUp={isMove && handleDotMove}*/>
-        <img className="map__plan" alt="карта" src={map} onClick={() => { handleMapClick(); onMapClick() }} ref={mapRef} />
+      <div className="map">
+        <img className="map__plan" alt="карта" src={map}
+        onClick={() => { handleMapClick(); onMapClick() }}
+        onDrop={(e) => { handleDrop(e) }}
+        onDragOver={(e) => { handleDragOver(e) }}
+        ref={mapRef} />
 
         {model.map(dot => {
           return <Dot
@@ -81,8 +72,6 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
             amount={dot.amount}
             onDeliveryClick={onDeliveryClick}
             onDotClick={onDotClick}
-
-
           />
         })}
 
