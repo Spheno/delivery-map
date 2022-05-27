@@ -8,6 +8,7 @@ import { ProtectedRoute } from '../../hoc/ ProtectedRoute';
 import { Map } from '../Map/Map';
 import { EditDeliveryForm } from '../EditDeliveryForm/EditDeliveryForm';
 import { NewDeliveryForm } from '../NewDeliveryForm/NewDeliveryForm';
+import { PopupWithConfirm } from '../PopupWithConfirm/PopupWithConfirm'
 
 import model from '../../utils/model.json'
 
@@ -77,6 +78,7 @@ function App() {
   const closeAllPopups = () => {
     setIsDeliveryPopupOpen(false);
     setNewIsDeliveryPopupOpen(false);
+    setIsPopupWithConfirmOpen(false);
   };
 
   const [selectedNewDot, setSelectedNewDot] = useState(null);
@@ -123,21 +125,27 @@ function App() {
     pushId()
   }
 
-  
-  const handleDotMove = (mouseState) => {
-    if (selectedDot) {
-      currentUserModel.map(el => {
-        if (el.id === selectedDot.id) {
-          el.x = mouseState.x;
-          el.y = mouseState.y;
-        }
-      })
-      setCurrentUserModel(currentUserModel)
-      setSelectedDot(null)
-    }
+
+  const handleDotMove = () => {
+    currentUserModel.map(el => {
+      if (el.id === selectedDot.id) {
+        el.x = mouseState.x;
+        el.y = mouseState.y;
+      }
+    })
+    setCurrentUserModel(currentUserModel)
+    setSelectedDot(null)
   }
-  
-  
+
+  const [isPopupWithConfirmOpen, setIsPopupWithConfirmOpen] = useState(false);
+  const [mouseState, setMouseState] = useState({});
+
+  const handlePopupWithConfirmOpen = (mouse) => {
+
+    setIsPopupWithConfirmOpen(true);
+    setMouseState(mouse)
+    console.log(mouseState, mouse)
+  };
 
   return (
     <>
@@ -156,7 +164,8 @@ function App() {
                 onMapClick={handleNewDeliveryClick}
                 onDotClick={handleDotClick}
                 onNewDotClick={handleNewDotClick}
-                onDotMove={handleDotMove}
+                //onDotMove={handleDotMove}
+                onDotMove={handlePopupWithConfirmOpen}
               />
 
               <EditDeliveryForm
@@ -173,6 +182,13 @@ function App() {
                 onCreateDot={handleCreateDot}
                 selectedDot={selectedNewDot}
                 length={currentUserModel.length}
+              />
+
+              <PopupWithConfirm name='confirm'
+                title='Изменить координаты доставки?'
+                isOpen={isPopupWithConfirmOpen}
+                onClose={closeAllPopups}
+                onSubmit={handleDotMove}
               />
 
             </ProtectedRoute>} />

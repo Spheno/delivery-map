@@ -114,6 +114,10 @@
   margin-bottom: 36px;
 }
 
+.form__button-submit_type_confirm {
+  min-width: 100px;
+}
+
 .form__button-submit_type_new-delivery {
   min-width: 358px;
 }
@@ -133,9 +137,13 @@
 
 .form__button-container {
   min-width: 358px;
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form__button-container_type_confirm {
+  min-width: 220px;
 }
 
 .button__disabled {
@@ -153,6 +161,10 @@ align-items: center;
   .form__button-close_type_delivery {
     left: 300px;
     bottom: 530px;
+  }
+
+  .form__button-close_type_confirm {
+    left: 290px;
   }
 
   .form__button-close {
@@ -190,6 +202,10 @@ align-items: center;
 
   .form__button-container {
     min-width: 238px;
+  }
+
+  .form__button-container_type_confirm {
+    min-width: 220px;
   }
 
   .form__button-submit_type_delete {
