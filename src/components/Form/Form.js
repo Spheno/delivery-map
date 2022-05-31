@@ -27,7 +27,7 @@ export function Form({ isOpen, onClose, name, title, buttonName, children, onUpd
           amount: Number(values.amount),
           x: Number(values.coordx),
           y: Number(values.coordy),
-          id: `${length}${new Date().getTime()}`,
+          id: `${length.length}${new Date().getTime()}`,
         })
       resetForm()
     } else {

@@ -195,7 +195,7 @@ function App() {
                 onClose={closeAllPopups}
                 onCreateDot={handleCreateDot}
                 selectedDot={selectedNewDot}
-                length={currentUserModel.length}
+                length={currentUserModel}
               />
 
               <PopupWithConfirm name='confirm'
