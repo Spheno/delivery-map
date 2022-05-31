@@ -16,7 +16,7 @@ export function Form({ isOpen, onClose, name, title, buttonName, children, onUpd
         coordy: selectedDot.y
       })
     }
-  }, [selectedDot])
+  }, [selectedDot, resetForm])
 
   function handleSubmit(e) {
     e.preventDefault();

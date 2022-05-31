@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useMousePosition } from '../../hooks/useMousePosition';
 import { useSize } from '../../hooks/useSize';
 
-export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotClick, onDotMove, isLoggedIn }) {
+export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotClick, onDotMove }) {
 
   const mapRef = useRef()
   const mouseState = useMousePosition(mapRef)
@@ -20,15 +20,16 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
 
   const [headerHeight, setHeaderHeight] = useState()
 
-  const hadleWindowWidth = () => {
-    if (windowWidth < 550) {
-      setHeaderHeight(72)
-    } else {
-      setHeaderHeight(92)
-    }
-  }
-
   useEffect(() => {
+
+    const hadleWindowWidth = () => {
+      if (windowWidth < 550) {
+        setHeaderHeight(72)
+      } else {
+        setHeaderHeight(92)
+      }
+    }
+
     hadleWindowWidth()
   }, [windowWidth])
 

@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("currentUserModel", JSON.stringify(currentUserModel));
-  }, [JSON.stringify(currentUserModel)]);
+  }, [JSON.stringify(currentUserModel), currentUserModel]);
 
   const handleLoggedIn = () => {
     setIsLoggedIn(true);
@@ -61,7 +61,7 @@ function App() {
     if (!isLoggedIn) {
       navigate("/signin")
     }
-  }, [location.pathname])
+  }, [navigate, isLoggedIn])
 
   /* выход */
 
@@ -180,7 +180,6 @@ function App() {
                 onDotClick={handleDotClick}
                 onNewDotClick={handleNewDotClick}
                 onDotMove={handlePopupWithConfirmOpen}
-                isLoggedIn={isLoggedIn}
               />
 
               <EditDeliveryForm

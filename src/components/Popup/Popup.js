@@ -4,6 +4,11 @@ import { useEffect } from 'react';
 export function Popup({ isOpen, onClose, name, children }) {
 
   useEffect(() => {
+    function handlerClosePopupOnEsc(e) {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    }
     if (!isOpen) return
     document.addEventListener('keyup', (e) => { handlerClosePopupOnEsc(e) });
     return () => {
@@ -11,12 +16,6 @@ export function Popup({ isOpen, onClose, name, children }) {
     }
 
   }, [isOpen, onClose])
-
-  function handlerClosePopupOnEsc(e) {
-    if (e.key === 'Escape') {
-      onClose();
-    }
-  }
 
   function handlerClosePopupOverlayClick(e) {
     if (e.target.classList.contains('popup')) {
@@ -26,11 +25,11 @@ export function Popup({ isOpen, onClose, name, children }) {
 
   return (
 
-      <article className={`popup popup_type_${name} ${isOpen ? 'popup_is-opened' : ''}`} onClick={(e) => handlerClosePopupOverlayClick(e)} >
+    <article className={`popup popup_type_${name} ${isOpen ? 'popup_is-opened' : ''}`} onClick={(e) => handlerClosePopupOverlayClick(e)} >
 
-        {children}
+      {children}
 
-      </article>
+    </article>
 
   )
 }
