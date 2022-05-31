@@ -6,13 +6,13 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation'
 
 export function Login({ onLogIn, isLoggedIn }) {
 
-  const navigate = useNavigate();
+  /*const navigate = useNavigate();
 
   useEffect(() => {
     if(isLoggedIn) {
       navigate("/map")
     }
-  }, [])
+  }, [])*/
   
    const { values, handleChange, errors, isValid } = useFormWithValidation();
  

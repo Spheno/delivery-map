@@ -1,9 +1,8 @@
 import './App.css';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Layout } from '../Layout/Layout';
 import { Login } from '../Login/Login';
-import { NotFound } from '../NotFound/NotFound';
 import { ProtectedRoute } from '../../hoc/ ProtectedRoute';
 import { Map } from '../Map/Map';
 import { EditDeliveryForm } from '../EditDeliveryForm/EditDeliveryForm';
@@ -15,6 +14,7 @@ import model from '../../utils/model.json'
 function App() {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   /* авторизация пользователя */
 
@@ -53,6 +53,15 @@ function App() {
     localStorage.setItem("name", JSON.stringify(name));
     localStorage.setItem("password", JSON.stringify(password));
   }, [name, password]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/map")
+    }
+    if (!isLoggedIn) {
+      navigate("/signin")
+    }
+  }, [location.pathname])
 
   /* выход */
 
@@ -199,8 +208,6 @@ function App() {
             </ProtectedRoute>} />
 
         </Route>
-
-        <Route path="*" element={<NotFound />} />
 
       </Routes>
 
