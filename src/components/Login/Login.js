@@ -10,7 +10,7 @@ export function Login({ onLogIn, isLoggedIn }) {
 
   useEffect(() => {
     if(isLoggedIn) {
-      navigate("/")
+      navigate("/map")
     }
   }, [])
   

@@ -9,9 +9,10 @@ export const useMousePosition = (ref) => {
       const coordY = e.pageY;
       setMousePosition({ coordX, coordY });
     };
-    ref.current.addEventListener("mousemove", getMousePosition);
+    const map = ref.current
+    map.addEventListener("mousemove", getMousePosition);
     return function cleanup() {
-      ref.current.removeEventListener("mousemove", getMousePosition);
+      map.removeEventListener("mousemove", getMousePosition);
     };
   });
   return mousePosition;

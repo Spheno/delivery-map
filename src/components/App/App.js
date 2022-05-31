@@ -46,7 +46,7 @@ function App() {
     handleLoggedIn()
     setName({ login })
     setPassword({ password })
-    navigate("/")
+    navigate("/map")
   }
 
   useEffect(() => {
@@ -63,10 +63,10 @@ function App() {
     setIsLoggedIn(false);
     setName('')
     setPassword('')
-    navigate("/signin")
+    navigate('/signin')
   }
 
-  /* Редактирование создание новых доставок */
+  /* Редактирование и создание новых доставок */
 
   const [isDeliveryPopupOpen, setIsDeliveryPopupOpen] = useState(false);
   const [isNewDeliveryPopupOpen, setNewIsDeliveryPopupOpen] = useState(false);
@@ -120,11 +120,14 @@ function App() {
     setCurrentUserModel([dot, ...currentUserModel]);
   }
 
+  /* Сброс всех изменений карты */
+
   const handleReset = (e) => {
     e.preventDefault();
     pushId()
   }
 
+  /* Перетягивание точки по карте */
 
   const handleDotMove = () => {
     currentUserModel.map(el => {
@@ -135,6 +138,7 @@ function App() {
     })
     setCurrentUserModel(currentUserModel)
     setSelectedDot(null)
+    setMouseState(null)
   }
 
   const [isPopupWithConfirmOpen, setIsPopupWithConfirmOpen] = useState(false);
@@ -144,7 +148,6 @@ function App() {
 
     setIsPopupWithConfirmOpen(true);
     setMouseState(mouse)
-    console.log(mouseState, mouse)
   };
 
   return (
@@ -152,9 +155,11 @@ function App() {
 
       <Routes>
 
-        <Route path="/" element={<Layout isLoggedIn={isLoggedIn} reset={handleReset} logOut={handleLogOut} />}>
+        <Route path="/signin" element={<Layout isLoggedIn={isLoggedIn} reset={handleReset} logOut={handleLogOut} />}>
+          <Route index element={<Login isLoggedIn={isLoggedIn} onLogIn={handleLogIn} />} />
+        </Route>
 
-          <Route path="signin" element={<Login isLoggedIn={isLoggedIn} onLogIn={handleLogIn} />} />
+        <Route path="/map" element={<Layout isLoggedIn={isLoggedIn} reset={handleReset} logOut={handleLogOut} />}>
 
           <Route index element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
@@ -164,8 +169,8 @@ function App() {
                 onMapClick={handleNewDeliveryClick}
                 onDotClick={handleDotClick}
                 onNewDotClick={handleNewDotClick}
-                //onDotMove={handleDotMove}
                 onDotMove={handlePopupWithConfirmOpen}
+                isLoggedIn={isLoggedIn}
               />
 
               <EditDeliveryForm
