@@ -22,9 +22,11 @@ function App() {
   const [password, setPassword] = useState(localStorage.getItem('password') ? JSON.parse(localStorage.getItem('password')) : '')
   const [currentUserModel, setCurrentUserModel] = useState(localStorage.getItem('currentUserModel') ? JSON.parse(localStorage.getItem('currentUserModel')) : null)
 
+  const stringifyCurrentUserModel = JSON.stringify(currentUserModel);
+
   useEffect(() => {
     localStorage.setItem("currentUserModel", JSON.stringify(currentUserModel));
-  }, [JSON.stringify(currentUserModel), currentUserModel]);
+  }, [stringifyCurrentUserModel, currentUserModel]);
 
   const handleLoggedIn = () => {
     setIsLoggedIn(true);
