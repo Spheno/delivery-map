@@ -13,9 +13,7 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
   const windowWidth = useSize()
 
   useEffect(() => {
-   
       handleMapClick()
-    
   }, [mouseState])
 
   const [headerHeight, setHeaderHeight] = useState()

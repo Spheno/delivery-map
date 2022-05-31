@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Layout } from '../Layout/Layout';
 import { Login } from '../Login/Login';
@@ -14,7 +14,6 @@ import model from '../../utils/model.json'
 function App() {
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   /* авторизация пользователя */
 
@@ -37,7 +36,7 @@ function App() {
 
 
   const pushId = () => {
-    model.map((n, i) => { n.id = `${i}${new Date().getTime()}` })
+    model.forEach((n, i) => { n.id = `${i}${new Date().getTime()}` })
     return setCurrentUserModel(model)
   }
 
@@ -101,7 +100,7 @@ function App() {
   };
 
   const handleDeliveryUpdate = ({ name, amount, x, y, id }) => {
-    currentUserModel.map(el => {
+    currentUserModel.forEach(el => {
       if (el.id === id) {
         el.name = name;
         el.amount = amount;
@@ -140,7 +139,7 @@ function App() {
 
   const handleDotMove = (e) => {
     e.preventDefault();
-    currentUserModel.map(el => {
+    currentUserModel.forEach(el => {
       if (el.id === selectedDot.id) {
         el.x = mouseState.x;
         el.y = mouseState.y;
