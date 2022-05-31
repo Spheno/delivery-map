@@ -138,7 +138,8 @@ function App() {
 
   /* Перетягивание точки по карте */
 
-  const handleDotMove = () => {
+  const handleDotMove = (e) => {
+    e.preventDefault();
     currentUserModel.map(el => {
       if (el.id === selectedDot.id) {
         el.x = mouseState.x;
