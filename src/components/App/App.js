@@ -15,6 +15,13 @@ function App() {
 
   const navigate = useNavigate();
 
+  const createId = () => {
+    model.forEach((n, i) => { n.id = `${i}${new Date().getTime()}` })
+    localStorage.setItem("markList", JSON.stringify(model));
+  }
+
+  const [markList, setMarkList] = useState(localStorage.getItem('markList') ? JSON.parse(localStorage.getItem('markList')) : createId)
+
   /* авторизация пользователя */
 
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') ? JSON.parse(localStorage.getItem('isLoggedIn')) : false)
@@ -36,14 +43,8 @@ function App() {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
 
-
-  const pushId = () => {
-    model.forEach((n, i) => { n.id = `${i}${new Date().getTime()}` })
-    return setCurrentUserModel(model)
-  }
-
   const handleLogIn = ({ login, password }) => {
-    pushId()
+    setCurrentUserModel(markList)
     handleLoggedIn()
     setName({ login })
     setPassword({ password })
@@ -134,7 +135,8 @@ function App() {
 
   const handleReset = (e) => {
     e.preventDefault();
-    pushId()
+    return setCurrentUserModel(markList)
+    
   }
 
   /* Перетягивание точки по карте */
@@ -143,8 +145,8 @@ function App() {
     e.preventDefault();
     currentUserModel.forEach(el => {
       if (el.id === selectedDot.id) {
-        el.x = mouseState.x;
-        el.y = mouseState.y;
+        el.x = Number(mouseState.x);
+        el.y = Number(mouseState.y);
       }
     })
     setCurrentUserModel(currentUserModel)
