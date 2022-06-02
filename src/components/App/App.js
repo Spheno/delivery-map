@@ -20,7 +20,7 @@ function App() {
     localStorage.setItem("markList", JSON.stringify(model));
   }
 
-  const [markList, setMarkList] = useState(localStorage.getItem('markList') ? JSON.parse(localStorage.getItem('markList')) : createId)
+ const [markList, setMarkList] = useState(localStorage.getItem('markList') ? JSON.parse(localStorage.getItem('markList')) : createId)
 
   /* авторизация пользователя */
 
@@ -44,7 +44,7 @@ function App() {
   }, [isLoggedIn]);
 
   const handleLogIn = ({ login, password }) => {
-    setCurrentUserModel(markList)
+    setCurrentUserModel(JSON.parse(localStorage.getItem('markList')))
     handleLoggedIn()
     setName({ login })
     setPassword({ password })
@@ -135,8 +135,7 @@ function App() {
 
   const handleReset = (e) => {
     e.preventDefault();
-    return setCurrentUserModel(markList)
-    
+    setCurrentUserModel(JSON.parse(localStorage.getItem('markList')) )
   }
 
   /* Перетягивание точки по карте */

@@ -11,12 +11,19 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
   const mapRef = useRef()
   const mouseState = useMousePosition(mapRef)
   const windowWidth = useSize()
-
-  useEffect(() => {
-      handleMapClick()
-  }, [mouseState])
-
   const [headerHeight, setHeaderHeight] = useState()
+
+  const coord = (coordX, coordY) => {
+    const width = mapRef.current.clientWidth
+    const percent = width / 100
+    const x = ((coordX - (window.innerWidth - width) / 2) / percent).toFixed(15);
+    const y = ((coordY - headerHeight) / percent).toFixed(15);
+    return { x, y }
+  };
+
+  const handleMapClick = () => {
+    return onNewDotClick(coord(mouseState.coordX, mouseState.coordY))
+  }
 
   useEffect(() => {
 
@@ -30,18 +37,6 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
 
     hadleWindowWidth()
   }, [windowWidth])
-
-  const coord = (coordX, coordY) => {
-    const width = mapRef.current.clientWidth
-    const percent = width / 100
-    const x = ((coordX - (window.innerWidth - width) / 2) / percent).toFixed(15);
-    const y = ((coordY - headerHeight) / percent).toFixed(15);
-    return { x, y }
-  }
-
-  const handleMapClick = () => {
-    return onNewDotClick(coord(mouseState.coordX, mouseState.coordY))
-  }
 
   function handleDrop(e) {
     e.preventDefault()
@@ -57,10 +52,10 @@ export function Map({ model, onDeliveryClick, onMapClick, onDotClick, onNewDotCl
     <main className="page__container">
       <div className="map">
         <img className="map__plan" alt="карта" src={map}
-        onClick={() => { handleMapClick(); onMapClick() }}
-        onDrop={(e) => { handleDrop(e) }}
-        onDragOver={(e) => { handleDragOver(e) }}
-        ref={mapRef} />
+          onClick={() => { handleMapClick(); onMapClick() }}
+          onDrop={(e) => { handleDrop(e) }}
+          onDragOver={(e) => { handleDragOver(e) }}
+          ref={mapRef} />
 
         {model.map(dot => {
           return <Dot
